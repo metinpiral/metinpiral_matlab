@@ -1,0 +1,206 @@
+% Bölüm 2
+
+% Bu MATLAB kodunda bir vektör oluşturuduk 6 elemanlı sayı dizisini temsil eder
+w = [42 123 124 163 168 666];
+
+% Task 1
+% Bu MATLAB kodu, "Family Fun" adında bir kursu temsil eden bir course nesnesini oluşturuyor
+c= course("Family Fun","White",w );
+ 
+
+% Task 2
+% Bu MATLAB kodu, idstick adlı bir fonksiyonu kullanarak 123456 değerini içeren bir kimlik numarası (id) oluşturuyor 
+id= idstick(123456);
+
+% Task 3
+% whos komutu ile değişkenlerin bilgilerini görüntüledim 
+whos 
+
+% Task 4
+% Ozeliklerini ve yöntemlerini sıraladım
+properties(id)
+
+
+% Bu MATLAB kodu, id değişkenine ait olan metodları listeleyerek görmemizi sağlar.
+methods(id)
+
+% Task 5
+% Bu MATLAB kodu, id değişkenine ait olan bir nesnenin register metodunu çağırarak kayıt işlemi gerçekleştiriyor
+id = register(id,"Astrid",c);
+
+% Task 6
+% Bu MATLAB kodu, id değişkenine ait bir nesnenin checkWaypoint metodunu çağırarak belirli bir kontrol noktasını 
+% (waypoint) işlemek gibi görünüyor. Bu metodun argümanlarına bakarak, kontrol noktasının "42" olduğu anlaşılıyor.
+id = checkWaypoint(id,42);
+
+% Bu MATLAB kodu, id değişkenine ait bir nesnenin iki farklı kontrol noktasını (checkWaypoint) işlemesini ve 
+% ardından bu id nesnesinin Timestamps özelliğine erişerek zaman damgalarını almasını sağlar.
+id = checkWaypoint(id,123);
+id = checkWaypoint(id,163);
+id.Timestamps;
+
+
+% Bölüm 3
+
+
+% Bu MATLAB kodu, course sınıfından bir nesne olan c değişkenini oluşturuyor. course sınıfının içeriğini görmek ve 
+% bu nesnenin özelliklerini anlamak için whos fonksiyonu kullanılıyor.
+w1 = [42 123 124 163 168 666];
+w2 = [42 112:123 666];
+
+c = course("Family Fun","White",w1);
+whos c
+
+% Task 1
+% Bu MATLAB kodu, daha önce oluşturulan c değişkenine ait bir kurs nesnesinin ikinci elemanını, 
+% yani c vektörünün ikinci elemanını, yeni bir kurs nesnesiyle güncelliyor
+c(2) = course("Insanity","Red",w2);
+
+
+% Task 2
+% numara tanımladım 
+id = idstick([123456,567890,987654]);
+
+
+% Task 3
+% astridi kaydettim 
+
+id(1) = register(id(1),"Astrid",c(1));
+
+
+% Task 4
+% register metodunu çağırarak bir kayıt işlemi gerçekleştiriyoruz 
+
+id(2) = register(id(2),"Erik",c(1));
+
+
+% Task 5
+% Astridin kaydını 42 ye atadık 
+id(1) = checkWaypoint(id(1),42);
+
+
+
+% Further Practice
+% sistemi denedik 
+% Astrid
+id(1) = checkWaypoint(id(1),123);
+% Now Erik starts
+id(2) = checkWaypoint(id(2),42);
+% Astrid again
+id(1) = checkWaypoint(id(1),124);
+id(1) = checkWaypoint(id(1),163);
+% Erik
+id(2) = checkWaypoint(id(2),123);
+% Astrid's times
+id(1).Timestamps
+% Erik's times
+id(2).Timestamps
+
+% Creating Custom ClassesCreating a New Class(2/2) Creating a Class
+% Definition Bölümü 
+
+
+c = Course;
+lvl = c.Level;
+% Bu MATLAB kodunda, c değişkenine bir "Course" nesnesi atadım
+
+c.Level = 'White';
+% Bu satırda, c nesnesinin Level özelliği "White" metniyle günceledim
+
+c.Level = 42;
+
+%c.Level'ın 42 olarak güncelledim
+
+
+% Bu MATLAB kodu, iki adet nesne oluşturuyor: bir tanesi course sınıfından 
+% bir nesneyi temsil ederken (c), diğeri ise idstick sınıfından bir nesneyi temsil ediyor (id)
+c = course;
+c.Name = "Family Fun";
+c.Level = "White";
+c.Waypoints = [42 123 124 163 168 666];
+
+id = idstick;
+id.SerialNumber = 1234
+
+Task 2
+% register metodunu çağırarak bir kayıt işlemi gerçekleştiriyoruz
+idout = register(id,"Erik",c)
+
+
+Task 3
+% id ve idout nesnelerinin Participant özelliklerine erişerek bu bilgileri p1 ve p2 değişkenlerine atıyor 
+p1 = id.Participant
+p2 = idout.Participant
+
+
+Further Practice
+
+%  Bu fonksiyon, bir kimlik (id), bir kişinin adı (name) ve bir kurs nesnesi (course) 
+% alarak belirli bir kayıt işlemi gerçekleştirir.
+
+function id = register(id,name,course)
+    id.Participant = name;
+    id.Course = course;
+    id.Timestamps = NaT(size(course.Waypoints));
+    id.Status = "Ready";
+    signal(id,true)
+end
+
+
+w = [42 123 124 163 168 666];
+
+Task 2
+id = idstick(54321)
+
+
+Task 4
+
+c = course("Family Fun","White",w);
+
+Further Practice
+
+id = register(id,"Erik",c)
+w = [42 112:123 666];
+c2 = course("Insanity","Red",w);
+id = register(id,"Erik",c2)
+
+Property Access
+Make a course
+w = [42 123 124 163 168 666];
+
+c = course("Family Fun","White",w)
+Properties can be accessed
+level = c.Level
+wout = c.Waypoints
+
+But not modified
+% Should fail
+c.Level = "Yellow"
+
+ID Stick
+id = idstick(12345)
+
+Property access
+sn = id.SerialNumber
+% Should fail
+id.SerialNumber = 54321
+
+% Should fail
+id.Course = course("Shouldn't Be Allowed","Red",5:10)
+
+Methods can still access & modify properties
+id = register(id,"Erik",c)
+
+The Status property can be invisible to the user
+
+% Bir hatayı tetiklemek için id nesnesinin Status özelliğine erişmeye çalışıyor
+% Should fail
+s = id.Status
+
+Restrict access to some methods
+% Bu iki MATLAB komutu, bir hata durumunu test etmek gibi görünüyor.
+% Should fail
+id = updateStatus(id,124)
+
+% Should fail
+signal(id,false)
